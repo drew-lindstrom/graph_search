@@ -1,19 +1,12 @@
-import pygame
 from spot import Spot
 
-RED = (255, 0, 0)
-GREEN = (0, 0, 255)
-BLUE = (0, 255, 0)
-YELLOW = (255, 255, 0)
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-PURPLE = (128, 0, 128)
-ORANGE = (255, 165, 0)
-GREY = (128, 128, 128)
-TURQUOISE = (64, 224, 208)
+import colors
+import pygame
 
 
 def reconstruct_path(came_from, current, draw):
+    """Changes color of spots in came_from to purple to signify they are part of the path.
+    Then calls draw() after each spot update to update the display."""
     while current in came_from:
         current = came_from[current]
         current.make_path()
@@ -21,6 +14,7 @@ def reconstruct_path(came_from, current, draw):
 
 
 def make_grid(rows, width):
+    """Creates a 2D matrix of spot objects representing the grid in the game window."""
     grid = []
     gap = width // rows
 
@@ -34,16 +28,18 @@ def make_grid(rows, width):
 
 
 def draw_grid(win, rows, width):
+    """Draws gray lines on the window to signify the grid."""
     gap = width // rows
 
     for i in range(rows):
-        pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
+        pygame.draw.line(win, colors.GREY, (0, i * gap), (width, i * gap))
         for j in range(rows):
-            pygame.draw.line(win, GREY, (j * gap, 0), (j * gap, width))
+            pygame.draw.line(win, colors.GREY, (j * gap, 0), (j * gap, width))
 
 
 def draw(win, grid, rows, width):
-    win.fill(WHITE)
+    """Fills window with white, draws individual squares for each spot, draws the grid lines, and then updates the display."""
+    win.fill(colors.WHITE)
 
     for row in grid:
         for spot in row:
@@ -54,6 +50,7 @@ def draw(win, grid, rows, width):
 
 
 def get_clicked_pos(pos, rows, width):
+    """Given the position of a right or left click on the grid, returns the row and column where the click occured."""
     gap = width // rows
     y, x = pos
 
