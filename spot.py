@@ -1,71 +1,74 @@
+import colors
 import pygame
-
-RED = (255, 0, 0)
-GREEN = (0, 0, 255)
-BLUE = (0, 255, 0)
-YELLOW = (255, 255, 0)
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-PURPLE = (128, 0, 128)
-ORANGE = (255, 165, 0)
-GREY = (128, 128, 128)
-TURQUOISE = (64, 224, 208)
 
 
 class Spot:
+    """Object to specify each spot on the game grid. Color of the spot specifys the spot's status.
+    For example, black means a spot is a barrier."""
+
     def __init__(self, row, col, width, total_rows):
         self.row = row
         self.col = col
         self.x = row * width
         self.y = col * width
-        self.color = WHITE
+        self.color = colors.WHITE
         self.neighbors = []
         self.width = width
         self.total_rows = total_rows
 
     def get_pos(self):
+        """Returns position of spot object."""
         return self.row, self.col
 
     def is_closed(self):
-        return self.color == RED
+        """Returns True if object's color is red indicating the spot has already been visited in the graph search."""
+        return self.color == colors.RED
 
     def is_open(self):
-        return self.color == GREEN
+        """Returns True if object's color is green indicating the spot queued for being visited in the graph search."""
+        return self.color == colors.GREEN
 
     def is_barrier(self):
-        return self.color == BLACK
+        """Returns True if object's color is black indicating the spot is a barrier the search algorithm must search around."""
+        return self.color == colors.BLACK
 
     def is_start(self):
-        return self.color == ORANGE
+        """Returns Ture is object's color is orange indicating the spot is the starting location of the search algorithm."""
+        return self.color == colors.ORANGE
 
     def is_end(self):
-        return self.color == TURQUOISE
+        """Returns True if object's color is turquoise indicating the spot is the desired ending location of the search algorithm."""
+        return self.color == colors.TURQUOISE
 
     def reset(self):
-        self.color = WHITE
+        """Resets the object's color to white indicating the spot is now an empty spot without additional functionality."""
+        self.color = colors.WHITE
 
     def make_closed(self):
-        self.color = RED
+        self.color = colors.RED
 
     def make_open(self):
-        self.color = GREEN
+        self.color = colors.GREEN
 
     def make_barrier(self):
-        self.color = BLACK
+        self.color = colors.BLACK
 
     def make_start(self):
-        self.color = ORANGE
+        self.color = colors.ORANGE
 
     def make_end(self):
-        self.color = TURQUOISE
+        self.color = colors.TURQUOISE
 
     def make_path(self):
-        self.color = PURPLE
+        self.color = colors.PURPLE
 
     def draw(self, win):
+        """Draws spot in the game window."""
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
 
     def update_neighbors(self, grid):
+        """Updates a spot's list of neighbors by checking the spots above, below, left, and right of the calling spot.
+        If a neighbor is a barrier, said neighbor is excluded from list of neighbors."""
         self.neighbors = []
         if (
             self.row < self.total_rows - 1
