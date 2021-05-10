@@ -57,17 +57,21 @@ def main(win, width):
             # If key on keyboard is pressed...
             if event.type == pygame.KEYDOWN:
 
-                # If '1' or '2' is pressed and start and end are placed, 
+                # If '1' or '2' is pressed and start and end are placed,
                 # updates neighbors for each spot in the grid and then runs the appropriate search algorithm.
-                if (event.key == pygame.K_2 or event.key == pygram.K_1) and start and end:
+                if (
+                    (event.key == pygame.K_2 or event.key == pygame.K_1)
+                    and start
+                    and end
+                ):
                     for row in grid:
                         for spot in row:
                             spot.update_neighbors(grid)
                     # If '1' is pressed, runs the dijkstra's search algorithm.
                     # if event.key == pygame.K_1:
-                    #     dijkstra(lambda: draw(win, grid, ROWS, width), grid, start, end)                        
+                    #     dijkstra(lambda: draw(win, grid, ROWS, width), grid, start, end)
                     # If '2' is pressed, runs the a* search algorithm.
-                    elif event.key == pygram.K_2:
+                    if event.key == pygame.K_2:
                         a_star(lambda: draw(win, grid, ROWS, width), grid, start, end)
 
                 # If 'C' is pressed, clears the grid.
@@ -75,7 +79,11 @@ def main(win, width):
                     start = None
                     end = None
                     grid = make_grid(ROWS, width)
-                
+
+                # If 'Q' is pressed, quits the game.
+                if event.key == pygame.K_q:
+                    run = False
+
     pygame.quit()
 
 
