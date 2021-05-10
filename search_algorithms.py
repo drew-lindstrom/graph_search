@@ -1,3 +1,14 @@
+from queue import PriorityQueue
+from ui import reconstruct_path, make_grid, draw_grid, draw, get_clicked_pos
+import pygame
+
+
+def h(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
+    return abs(x1 - x2) + abs(y1 - y2)
+
+
 def a_star(draw, grid, start, end):
     count = 0
     open_set = PriorityQueue()
