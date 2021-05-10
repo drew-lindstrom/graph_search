@@ -1,6 +1,5 @@
-WIDTH = 800
-WIN = pygame.display.set_mode((WIDTH, WIDTH))
-pygame.display.set_caption("A* Path Finding Algorithm")
+import pygame
+from spot import Spot
 
 RED = (255, 0, 0)
 GREEN = (0, 0, 255)
@@ -12,12 +11,6 @@ PURPLE = (128, 0, 128)
 ORANGE = (255, 165, 0)
 GREY = (128, 128, 128)
 TURQUOISE = (64, 224, 208)
-
-
-def h(p1, p2):
-    x1, y1 = p1
-    x2, y2 = p2
-    return abs(x1 - x2) + abs(y1 - y2)
 
 
 def reconstruct_path(came_from, current, draw):
