@@ -1,8 +1,10 @@
+from util import reconstruct_path, make_grid, draw_grid, draw, get_clicked_pos
+from search_algorithms import a_star
+from spot import Spot
+
 import pygame
 import math
-from spot import Spot
-from search_algorithms import a_star
-from ui import reconstruct_path, make_grid, draw_grid, draw, get_clicked_pos
+
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -24,6 +26,8 @@ def main(win, width):
             if event.type == pygame.QUIT:
                 run = False
 
+            # If the left mouse button is pressed, gets the spot where the mouse clicked. First click creates the start point.
+            # Second click creates the end point. All clicks afterwards create barriers.
             if pygame.mouse.get_pressed()[0]:
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
@@ -39,6 +43,7 @@ def main(win, width):
                 elif spot != end and spot != start:
                     spot.make_barrier()
 
+            # If the right mouse button is pressed, gets the spot where the mouse clicked. Resets the specified spot.
             elif pygame.mouse.get_pressed()[2]:
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
@@ -49,7 +54,9 @@ def main(win, width):
                 elif spot == end:
                     end = None
 
+            # If key on keyboard is pressed...
             if event.type == pygame.KEYDOWN:
+                # If space is pressed while start and end are placed, runs the a* search algorithm.
                 if event.key == pygame.K_SPACE and start and end:
                     for row in grid:
                         for spot in row:
@@ -57,6 +64,7 @@ def main(win, width):
 
                     a_star(lambda: draw(win, grid, ROWS, width), grid, start, end)
 
+                # If 'C' is pressed, clears the grid.
                 if event.key == pygame.K_c:
                     start = None
                     end = None
