@@ -1,6 +1,12 @@
 import pygame
 import math
-from queue import PriorityQueue
+from spot import Spot
+from search_algorithms import a_star
+from ui import reconstruct_path, make_grid, draw_grid, draw, get_clicked_pos
+
+WIDTH = 800
+WIN = pygame.display.set_mode((WIDTH, WIDTH))
+pygame.display.set_caption("Graph Search")
 
 
 def main(win, width):
@@ -49,7 +55,7 @@ def main(win, width):
                         for spot in row:
                             spot.update_neighbors(grid)
 
-                    algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+                    a_star(lambda: draw(win, grid, ROWS, width), grid, start, end)
 
                 if event.key == pygame.K_c:
                     start = None
