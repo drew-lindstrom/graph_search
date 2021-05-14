@@ -6,6 +6,7 @@ import pygame
 
 
 def dijkstra(draw, grid, start, end):
+    """Function for Dijkstra's graph search."""
     # Distance dictionary - First value is distance, second value is boolean if visited.
     distance = {spot: [float("inf"), False] for row in grid for spot in row}
     # Unexplored_set - used to keep track of how many nodes still need to be examined.
@@ -29,7 +30,10 @@ def dijkstra(draw, grid, start, end):
                 current = key
 
         # Mark new current node as visited and remove from unexplored_set.
-        distance[current][1] = True
+        try:
+            distance[current][1] = True
+        except Exception:
+            break
         del unexplored_set[current]
 
         # Create path if the current node is the end node.

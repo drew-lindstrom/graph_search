@@ -1,5 +1,5 @@
 from util import reconstruct_path, make_grid, draw_grid, draw, get_clicked_pos
-from search_algorithms import a_star
+from search_algorithms import a_star, dijkstra
 from spot import Spot
 
 import pygame
@@ -68,8 +68,8 @@ def main(win, width):
                         for spot in row:
                             spot.update_neighbors(grid)
                     # If '1' is pressed, runs the dijkstra's search algorithm.
-                    # if event.key == pygame.K_1:
-                    #     dijkstra(lambda: draw(win, grid, ROWS, width), grid, start, end)
+                    if event.key == pygame.K_1:
+                        dijkstra(lambda: draw(win, grid, ROWS, width), grid, start, end)
                     # If '2' is pressed, runs the a* search algorithm.
                     if event.key == pygame.K_2:
                         a_star(lambda: draw(win, grid, ROWS, width), grid, start, end)

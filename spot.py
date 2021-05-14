@@ -85,7 +85,7 @@ class Spot:
         ):  # Right
             self.neighbors.append(grid[self.row][self.col + 1])
 
-        if self.row > 0 and not grid[self.row][self.col - 1].is_barrier():  # Left
+        if self.col > 0 and not grid[self.row][self.col - 1].is_barrier():  # Left
             self.neighbors.append(grid[self.row][self.col - 1])
 
     def __lt__(self, other):
